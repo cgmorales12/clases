@@ -1,0 +1,139 @@
+﻿@model Tipo_Datos.Models.Entidades.VentasModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="form-container">
+    <h2>Registro de Venta</h2>
+
+    <div id="imprimir">        <!-- Selección de cliente -->
+        <table class="table-responsive table-bordered">
+            <tr>
+                <td>
+                    <div class="form-group"></div>
+                    <div class="form-group">
+                        <label asp-for="ClientesModelId" class="control-label"></label>
+                        <select asp-for="ClientesModelId" class="form-control"
+                            asp-items="ViewBag.ClientesModelId" onchange="unCliente()">
+                            <option value="">Selecccion un Cliente</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label for="fechaVenta">Fecha de Venta:</label>
+                        <input type="date" id="fechaVenta" name="FechaVenta" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label for="Cedula_RUC">Cedula / RUC</label>
+                        <input type="text" id="Cedula_RUC" name="Cedula_RUC" disabled>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label for="Telefono">Telefono</label>
+                        <input type="text" id="Telefono" name="Telefono" disabled>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label for="Direccion">Direccion</label>
+                        <input type="text" id="Direccion" name="Direccion" disabled>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label for="Correo">Correo</label>
+                        <input type="text" id="Correo" name="Correo" disabled>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="form-group">
+            <label for="metodoPago">Método de Pago:</label>
+            <select id="metodoPago" name="Metodo_Pago" required>
+                <option value="">Seleccione</option>
+                <option value="Efectivo">Efectivo</option>
+                <option value="Tarjeta">Tarjeta</option>
+                <option value="Transferencia">Transferencia</option>
+            </select>
+        </div>
+
+        <!-- Productos vendidos -->
+        <h3>Productos Vendidos</h3>
+        <table id="productosTable">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Monto</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+            </tbody>
+        </table>
+
+    </div>
+        <button type="button" id="addProduct" class="btn-add" 
+        data-bs-toggle="modal" data-bs-target="#modalProductos"
+        onclick="Lista_Productos()">+ Agregar Producto</button>
+
+        <!-- Botón de enviar -->
+        <div class="form-group">
+        <button onclick="crear_venta()" class="btn-submit">Guardar Venta</button>
+        </div>
+   
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+<div class="modal fade" id="modalProductos" tabindex="-1" aria-labelledby="Productos" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agrager Prodcuctos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre Producto</th>
+                            <th>Precio Venta</th>
+                            <th>Cantidad</th>
+                            <th>Agregar</th>
+                        </tr>
+                    </thead>
+                   <tbody id="Lista_prodcutos"></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cerrar</button>
+                
+            </div>
+        </div>
+    </div>
+</div>

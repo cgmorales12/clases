@@ -1,0 +1,272 @@
+[
+  {
+    "ContainingType": "Tipo_Datos.Controllers.api.ClientesApiController",
+    "Method": "GetClientes",
+    "RelativePath": "api/ClientesApi",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Tipo_Datos.Models.Entidades.ClientesModel, Tipo_Datos, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Tipo_Datos.Controllers.api.ClientesApiController",
+    "Method": "PostClientesModel",
+    "RelativePath": "api/ClientesApi",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "clientesModel",
+        "Type": "Tipo_Datos.Models.Entidades.ClientesModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Tipo_Datos.Models.Entidades.ClientesModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Tipo_Datos.Controllers.api.ClientesApiController",
+    "Method": "GetClientesModel",
+    "RelativePath": "api/ClientesApi/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Tipo_Datos.Models.Entidades.ClientesModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Tipo_Datos.Controllers.api.ClientesApiController",
+    "Method": "PutClientesModel",
+    "RelativePath": "api/ClientesApi/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "clientesModel",
+        "Type": "Tipo_Datos.Models.Entidades.ClientesModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Tipo_Datos.Controllers.api.ClientesApiController",
+    "Method": "DeleteClientesModel",
+    "RelativePath": "api/ClientesApi/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Tipo_Datos.Controllers.api.ProductosApiController",
+    "Method": "GetProductos",
+    "RelativePath": "api/ProductosApi",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Tipo_Datos.Models.Entidades.ProductosModel, Tipo_Datos, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Tipo_Datos.Controllers.api.ProductosApiController",
+    "Method": "PostProductosModel",
+    "RelativePath": "api/ProductosApi",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productosModel",
+        "Type": "Tipo_Datos.Models.Entidades.ProductosModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Tipo_Datos.Models.Entidades.ProductosModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Tipo_Datos.Controllers.api.ProductosApiController",
+    "Method": "GetProductosModel",
+    "RelativePath": "api/ProductosApi/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Tipo_Datos.Models.Entidades.ProductosModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Tipo_Datos.Controllers.api.ProductosApiController",
+    "Method": "PutProductosModel",
+    "RelativePath": "api/ProductosApi/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "productosModel",
+        "Type": "Tipo_Datos.Models.Entidades.ProductosModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Tipo_Datos.Controllers.api.ProductosApiController",
+    "Method": "DeleteProductosModel",
+    "RelativePath": "api/ProductosApi/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Tipo_Datos.Controllers.api.VentasAPIController",
+    "Method": "PostVentasModel",
+    "RelativePath": "api/VentasAPI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ventasModel",
+        "Type": "Tipo_Datos.Models.Entidades.VentasModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Tipo_Datos.Models.Entidades.VentasModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Tipo_Datos.Controllers.api.VentasAPIController",
+    "Method": "GetVentasModel",
+    "RelativePath": "api/VentasAPI/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Tipo_Datos.Models.Entidades.VentasModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  }
+]

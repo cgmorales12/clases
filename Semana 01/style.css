@@ -1,0 +1,29 @@
+body{
+    font-size: 16px;  /*1em => 16px*/
+}
+
+/*rem*/
+ul li {
+    float: left;
+    margin: 2em;
+    list-style: none;
+    color: black;
+
+}
+ul li a {
+    color: black;
+    text-decoration: none;
+}
+
+/*media querys*/
+@media screen {
+    h1{
+        width: 50%;
+    }
+}
+
+/*psuedo elementos*/
+ul li a:hover{
+    font-size: 2em;
+    transition: 1s;
+}

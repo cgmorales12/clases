@@ -1,0 +1,29 @@
+<div id="area_imprimir">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(usuario of lista_usaurio; track usuario.id; let i = $index){
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>{{ usuario.nombre }}</td>
+        <td>{{ usuario.apellido }}</td>
+        <td>{{ usuario.email }}</td>
+        <td>{{ usuario.activo == false ? 'Usuario Inactivo' : 'Usuario Activo' }}</td>
+        <td>
+          <button>Editar</button>
+          <button>Eliminar</button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+<button (click)="imprimir()">Imprimir Tabla</button>

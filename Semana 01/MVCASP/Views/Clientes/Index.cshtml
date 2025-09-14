@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MVCASP.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Nuevo Cliente</a>
+</p>
+<table class="table table-bordered table-striped table-responsive">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre_Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido_Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion_Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono_Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha_Nacimiento)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre_Cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido_Cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion_Cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono_Cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha_Nacimiento)
+            </td>
+            <td>
+                <a class="btn btn-outline-success" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
