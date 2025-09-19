@@ -1,45 +1,67 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { of } from 'rxjs';
 import { AppComponent } from './app.component';
+import { EventManagementService } from './event-management.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let httpMock: HttpTestingController;
+  let serviceSpy: jasmine.SpyObj<EventManagementService>;
 
   beforeEach(async () => {
+    serviceSpy = jasmine.createSpyObj<EventManagementService>('EventManagementService', [
+      'getEvents',
+      'getParticipants',
+      'getRegistrations',
+      'createEvent',
+      'createParticipant',
+      'createRegistration',
+      'deleteEvent',
+      'deleteParticipant',
+      'deleteRegistration'
+    ]);
+
+    serviceSpy.getEvents.and.returnValue(of([]));
+    serviceSpy.getParticipants.and.returnValue(of([]));
+    serviceSpy.getRegistrations.and.returnValue(of([]));
+
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
-      imports: [HttpClientTestingModule]
+      imports: [FormsModule, ReactiveFormsModule],
+      providers: [{ provide: EventManagementService, useValue: serviceSpy }]
     }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    httpMock = TestBed.inject(HttpTestingController);
-  });
-
-  afterEach(() => {
-    httpMock.verify();
+    fixture.detectChanges();
   });
 
   it('should create the app', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should retrieve weather forecasts from the server', () => {
-    const mockForecasts = [
-      { date: '2021-10-01', temperatureC: 20, temperatureF: 68, summary: 'Mild' },
-      { date: '2021-10-02', temperatureC: 25, temperatureF: 77, summary: 'Warm' }
-    ];
+  it('should load initial data on init', () => {
+    expect(serviceSpy.getEvents).toHaveBeenCalled();
+    expect(serviceSpy.getParticipants).toHaveBeenCalled();
+    expect(serviceSpy.getRegistrations).toHaveBeenCalled();
+  });
 
-    component.ngOnInit();
+  it('should not submit an invalid event form', () => {
+    component.eventForm.setValue({ nombre: '', fecha: '', ubicacion: '', descripcion: '' });
+    component.submitEvent();
+    expect(serviceSpy.createEvent).not.toHaveBeenCalled();
+  });
 
-    const req = httpMock.expectOne('/weatherforecast');
-    expect(req.request.method).toEqual('GET');
-    req.flush(mockForecasts);
+  it('should submit a valid event form', () => {
+    const mockEvent = { eventoId: 1, nombre: 'Maratón', fecha: new Date().toISOString(), ubicacion: 'Parque', descripcion: '' };
+    serviceSpy.createEvent.and.returnValue(of(mockEvent));
 
-    expect(component.forecasts).toEqual(mockForecasts);
+    component.eventForm.setValue({ nombre: 'Maratón', fecha: '2025-01-01', ubicacion: 'Parque', descripcion: '' });
+    component.submitEvent();
+
+    expect(serviceSpy.createEvent).toHaveBeenCalled();
   });
 });

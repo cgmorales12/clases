@@ -1,24 +1,187 @@
-﻿<h1 id="tableLabel">Weather forecast</h1>
+<div class="page">
+  <header class="page__header">
+    <h1>{{ title }}</h1>
+    <p>Administra eventos deportivos, registra participantes y controla sus inscripciones desde un único panel.</p>
+  </header>
 
-<p>This component demonstrates fetching data from the server.</p>
+  <section *ngIf="feedbackMessage" class="feedback" [ngClass]="feedbackType">
+    {{ feedbackMessage }}
+  </section>
 
-<p *ngIf="!forecasts"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
+  <div class="grid">
+    <section class="card">
+      <h2>Nuevo evento</h2>
+      <form [formGroup]="eventForm" (ngSubmit)="submitEvent()">
+        <label>
+          Nombre
+          <input type="text" formControlName="nombre" placeholder="Ej. Torneo de tenis" />
+          <span class="error" *ngIf="eventForm.get('nombre')?.invalid && eventForm.get('nombre')?.touched">Nombre requerido.</span>
+        </label>
+        <label>
+          Fecha
+          <input type="date" formControlName="fecha" />
+          <span class="error" *ngIf="eventForm.get('fecha')?.invalid && eventForm.get('fecha')?.touched">Selecciona una fecha.</span>
+        </label>
+        <label>
+          Ubicación
+          <input type="text" formControlName="ubicacion" placeholder="Lugar del evento" />
+          <span class="error" *ngIf="eventForm.get('ubicacion')?.invalid && eventForm.get('ubicacion')?.touched">Ubicación requerida.</span>
+        </label>
+        <label>
+          Descripción
+          <textarea formControlName="descripcion" rows="3" placeholder="Detalle del evento"></textarea>
+        </label>
+        <button type="submit">Crear evento</button>
+      </form>
+    </section>
 
-<table *ngIf="forecasts">
-    <thead>
+    <section class="card">
+      <h2>Nuevo participante</h2>
+      <form [formGroup]="participantForm" (ngSubmit)="submitParticipant()">
+        <label>
+          Nombre
+          <input type="text" formControlName="nombre" placeholder="Nombre" />
+          <span class="error" *ngIf="participantForm.get('nombre')?.invalid && participantForm.get('nombre')?.touched">Nombre requerido.</span>
+        </label>
+        <label>
+          Apellido
+          <input type="text" formControlName="apellido" placeholder="Apellido" />
+          <span class="error" *ngIf="participantForm.get('apellido')?.invalid && participantForm.get('apellido')?.touched">Apellido requerido.</span>
+        </label>
+        <label>
+          Correo electrónico
+          <input type="email" formControlName="email" placeholder="usuario@correo.com" />
+          <span class="error" *ngIf="participantForm.get('email')?.invalid && participantForm.get('email')?.touched">Correo válido requerido.</span>
+        </label>
+        <label>
+          Teléfono
+          <input type="tel" formControlName="telefono" placeholder="Número de contacto" />
+        </label>
+        <button type="submit">Registrar participante</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Nueva inscripción</h2>
+      <form [formGroup]="registrationForm" (ngSubmit)="submitRegistration()">
+        <label>
+          Evento
+          <select formControlName="eventoId">
+            <option [ngValue]="null">Selecciona un evento</option>
+            <option *ngFor="let event of events" [ngValue]="event.eventoId">{{ event.nombre }} - {{ event.fecha | date:'mediumDate' }}</option>
+          </select>
+          <span class="error" *ngIf="registrationForm.get('eventoId')?.invalid && registrationForm.get('eventoId')?.touched">Selecciona un evento.</span>
+        </label>
+        <label>
+          Participante
+          <select formControlName="participanteId">
+            <option [ngValue]="null">Selecciona un participante</option>
+            <option *ngFor="let participant of participants" [ngValue]="participant.participanteId">{{ participant.nombre }} {{ participant.apellido }}</option>
+          </select>
+          <span class="error" *ngIf="registrationForm.get('participanteId')?.invalid && registrationForm.get('participanteId')?.touched">Selecciona un participante.</span>
+        </label>
+        <button type="submit">Inscribir participante</button>
+      </form>
+    </section>
+  </div>
+
+  <section class="card">
+    <div class="card__header">
+      <h2>Eventos programados</h2>
+      <span class="badge">{{ events.length }} eventos</span>
+    </div>
+    <table *ngIf="events.length; else noEvents">
+      <thead>
         <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
+          <th>Nombre</th>
+          <th>Fecha</th>
+          <th>Ubicación</th>
+          <th>Descripción</th>
+          <th>Inscritos</th>
+          <th></th>
         </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let forecast of forecasts">
-            <td>{{ forecast.date }}</td>
-            <td>{{ forecast.temperatureC }}</td>
-            <td>{{ forecast.temperatureF }}</td>
-            <td>{{ forecast.summary }}</td>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of events">
+          <td>{{ event.nombre }}</td>
+          <td>{{ event.fecha | date:'mediumDate' }}</td>
+          <td>{{ event.ubicacion }}</td>
+          <td>{{ event.descripcion || '—' }}</td>
+          <td>{{ registrationsCountByEvent(event.eventoId) }}</td>
+          <td><button class="link" type="button" (click)="deleteEvent(event.eventoId)">Eliminar</button></td>
         </tr>
-    </tbody>
-</table>
+      </tbody>
+    </table>
+    <ng-template #noEvents>
+      <p class="empty">Aún no hay eventos registrados.</p>
+    </ng-template>
+  </section>
+
+  <section class="card">
+    <div class="card__header">
+      <h2>Participantes</h2>
+      <span class="badge">{{ participants.length }} participantes</span>
+    </div>
+    <table *ngIf="participants.length; else noParticipants">
+      <thead>
+        <tr>
+          <th>Nombre completo</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Eventos inscritos</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let participant of participants">
+          <td>{{ participant.nombre }} {{ participant.apellido }}</td>
+          <td>{{ participant.email }}</td>
+          <td>{{ participant.telefono || '—' }}</td>
+          <td>{{ registrationsCountByParticipant(participant.participanteId) }}</td>
+          <td><button class="link" type="button" (click)="deleteParticipant(participant.participanteId)">Eliminar</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noParticipants>
+      <p class="empty">Registra participantes para comenzar a inscribirlos en eventos.</p>
+    </ng-template>
+  </section>
+
+  <section class="card">
+    <div class="card__header">
+      <h2>Inscripciones recientes</h2>
+      <div class="filters">
+        <label>
+          Filtrar por evento
+          <select [ngModel]="selectedEventFilter" (ngModelChange)="onEventFilterChange($event)">
+            <option [ngValue]="null">Todos los eventos</option>
+            <option *ngFor="let event of events" [ngValue]="event.eventoId">{{ event.nombre }}</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <table *ngIf="registrations.length; else noRegistrations">
+      <thead>
+        <tr>
+          <th>Evento</th>
+          <th>Participante</th>
+          <th>Correo</th>
+          <th>Fecha de inscripción</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let registration of registrations">
+          <td>{{ registration.eventoNombre }}</td>
+          <td>{{ registration.participanteNombre }}</td>
+          <td>{{ registration.participanteEmail }}</td>
+          <td>{{ registration.fechaInscripcion | date:'medium' }}</td>
+          <td><button class="link" type="button" (click)="deleteRegistration(registration.inscripcionId)">Eliminar</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noRegistrations>
+      <p class="empty">Aún no hay inscripciones registradas.</p>
+    </ng-template>
+  </section>
+</div>
